@@ -82,7 +82,7 @@ direction, where a forward camera cannot confirm the place. Every number comes f
 Clone the full repository: the test runner checks the method against a commit in its history.
 
 ```bash
-git clone https://github.com/manuel-rodriguezvillegas/s2pro2.git && cd s2pro2
+git clone https://github.com/robotics-trail/s2pro2.git && cd s2pro2
 ```
 
 Every runner is resumable: it downloads only what is missing, checks MD5 sums and skips finished

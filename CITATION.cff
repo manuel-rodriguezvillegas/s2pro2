@@ -9,7 +9,7 @@ authors:
     given-names: "Jaime"
   - family-names: "Tordesillas"
     given-names: "Jesus"
-repository-code: "https://github.com/manuel-rodriguezvillegas/s2pro2"
+repository-code: "https://github.com/robotics-trail/s2pro2"
 license: MIT
 version: 1.0.0
 date-released: 2026-11-23

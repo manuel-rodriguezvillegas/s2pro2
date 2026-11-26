@@ -128,8 +128,7 @@ class TopoNode:
         """
         if image is None:
             return
-        # This legacy convenience method cannot maintain descriptor/image
-        # alignment. Call set_views() when visual descriptors are available.
+        # Descriptors cannot stay aligned with images added one by one; set_views() keeps both.
         self.view_features = None
         self.view_embeddings = None
         if len(self.views) < self.MAX_VIEWS:
@@ -163,9 +162,6 @@ class TopoGraph:
         self.loop_exclusion_nodes: int = loop_exclusion_nodes
         self._next_id: int = 0
 
-    # ------------------------------------------------------------------ #
-    # Construction
-    # ------------------------------------------------------------------ #
     def new_node_id(self) -> int:
         """Return a fresh node id."""
         node_id: int = self._next_id
@@ -198,9 +194,6 @@ class TopoGraph:
         self.adjacency.get(id_b, set()).discard(id_a)
         self.edge_types.pop((min(id_a, id_b), max(id_a, id_b)), None)
 
-    # ------------------------------------------------------------------ #
-    # Queries
-    # ------------------------------------------------------------------ #
     def edges(self) -> list[tuple[int, int]]:
         """Return each undirected edge exactly once as (min_id, max_id)."""
         seen: set[tuple[int, int]] = set()
@@ -230,9 +223,6 @@ class TopoGraph:
         features = features / np.maximum(norms, 1e-12)
         return ids, features
 
-    # ------------------------------------------------------------------ #
-    # Persistence
-    # ------------------------------------------------------------------ #
     def without_images(self) -> TopoGraph:
         """A reloadable map retaining all matching, pose and topology state."""
         compact = TopoGraph(self.frame_id, self.loop_exclusion_nodes)
@@ -264,7 +254,7 @@ class TopoGraph:
             graph: TopoGraph = pickle.load(f)
         if not isinstance(graph, TopoGraph):
             raise TypeError(f"File {path} does not contain a TopoGraph")
-        # Drop obsolete auxiliary attributes from trusted historical maps.
+        # Stored maps may carry attributes that TopoGraph does not define.
         for name in set(vars(graph)) - set(vars(TopoGraph())):
             delattr(graph, name)
         if not hasattr(graph, "edge_types"):

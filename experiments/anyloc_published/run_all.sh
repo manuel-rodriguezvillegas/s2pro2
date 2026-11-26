@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
 # Published AnyLoc (ViT-G/14) against the exact manuscript mapper, on an NVIDIA GPU.
 #
-#   1. Python environment: reuses experiments/gate_verification/.venv if it exists
-#      (PyTorch CUDA from the October run); otherwise creates one here.
+#   1. Python environment with PyTorch for the local CUDA driver, created here if missing.
 #   2. Downloads only what is missing: the 7 manuscript traversals and, with
 #      RUN_HELDOUT=1, the 12 held-out ones.
 #   3. GPU descriptors (DINOv2-S, AnyLoc-GeM S/G, AnyLoc-VLAD-G indoor vocabulary).
 #   4. Replay of the manuscript mapper. The development step must reproduce the
 #      manuscript exactly (25/2/23 at 2 m and the cosine ablation, with the manuscript's
 #      exclusion of the two most recent nodes) or the script stops.
-#   5. Summary in experiments/anyloc_published/results/ (small files: commit and push them).
+#   5. Summary in experiments/anyloc_published/results/.
 #
-# Usage, from the repository root (survives a dropped SSH/VS Code session):
+# Usage, from the repository root:
 #   nohup bash experiments/anyloc_published/run_all.sh > anyloc_published.log 2>&1 &
 #   RUN_HELDOUT=1 nohup bash experiments/anyloc_published/run_all.sh > anyloc_published.log 2>&1 &
 #   tail -f anyloc_published.log
@@ -40,31 +39,26 @@ done
 nvidia-smi --query-gpu=name,memory.total,driver_version --format=csv,noheader
 echo "git: $(git -C "$REPO" rev-parse --short HEAD) $(git -C "$REPO" status --porcelain | wc -l) local changes"
 echo "free disk under $DATA_ROOT: $(df -h "$DATA_ROOT" | awk 'NR==2 {print $4}')"
-[ -f "$HERE/reference/dinov2_vits14_mac.npz" ] || { echo "missing reference/dinov2_vits14_mac.npz (git pull?)"; exit 1; }
+[ -f "$HERE/reference/dinov2_vits14_mac.npz" ] || { echo "missing reference/dinov2_vits14_mac.npz"; exit 1; }
 
-# --------------------------------------------------------------------------- #
 step "1. Python environment"
-VENV=$REPO/experiments/gate_verification/.venv
+VENV=$HERE/.venv
 if [ ! -x "$VENV/bin/python" ]; then
-  VENV=$HERE/.venv
-  if [ ! -x "$VENV/bin/python" ]; then
-    command -v uv >/dev/null || curl -LsSf https://astral.sh/uv/install.sh | sh
-    cuda=$(nvidia-smi | sed -n 's/.*CUDA Version: \([0-9]*\)\.\([0-9]*\).*/\1\2/p' | head -1)
-    cuda=${cuda:-118}
-    if   [ "$cuda" -ge 128 ]; then tag=cu128
-    elif [ "$cuda" -ge 126 ]; then tag=cu126
-    elif [ "$cuda" -ge 124 ]; then tag=cu124
-    elif [ "$cuda" -ge 121 ]; then tag=cu121
-    else tag=cu118; fi
-    uv venv --python 3.12 "$VENV"
-    uv pip install --python "$VENV/bin/python" torch torchvision --index-url "https://download.pytorch.org/whl/$tag"
-  fi
+  command -v uv >/dev/null || curl -LsSf https://astral.sh/uv/install.sh | sh
+  cuda=$(nvidia-smi | sed -n 's/.*CUDA Version: \([0-9]*\)\.\([0-9]*\).*/\1\2/p' | head -1)
+  cuda=${cuda:-118}
+  if   [ "$cuda" -ge 128 ]; then tag=cu128
+  elif [ "$cuda" -ge 126 ]; then tag=cu126
+  elif [ "$cuda" -ge 124 ]; then tag=cu124
+  elif [ "$cuda" -ge 121 ]; then tag=cu121
+  else tag=cu118; fi
+  uv venv --python 3.12 "$VENV"
+  uv pip install --python "$VENV/bin/python" torch torchvision --index-url "https://download.pytorch.org/whl/$tag"
 fi
 uv pip install --python "$VENV/bin/python" -q "numpy<2" scipy pyyaml pillow "opencv-python-headless<4.12"
 PY=$VENV/bin/python
 $PY -c "import torch; assert torch.cuda.is_available(), 'PyTorch does not see the GPU'; print('torch', torch.__version__, torch.cuda.get_device_name(0))"
 
-# --------------------------------------------------------------------------- #
 step "2. Data (only missing recordings)"
 source "$REPO/experiments/datasets.sh"
 {
@@ -85,7 +79,6 @@ source "$REPO/experiments/datasets.sh"
 } > "$OUT/downloads.txt"
 fetch_all < "$OUT/downloads.txt"
 
-# --------------------------------------------------------------------------- #
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 HF_HUB_DISABLE_TELEMETRY=1 \
        PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 cd "$HERE"
@@ -93,7 +86,7 @@ DEV="freiburg_a freiburg_ext saarbruecken_a saarbruecken_ext cid_sims_apartment1
 
 step "3. Reproduction gate (manuscript mapper, Mac descriptors; no GPU)"
 $PY replay.py --out "$OUT" --split dev --variants manuscript manuscript_cosine --jobs "$JOBS"
-grep -q '"PASS"' "$OUT/reproduction_dev.json" || { echo "Reproduction FAILED: stop and send anyloc_published.log"; exit 1; }
+grep -q '"PASS"' "$OUT/reproduction_dev.json" || { echo "Reproduction FAILED: see $OUT/reproduction_dev.json"; exit 1; }
 
 step "4. GPU descriptors, development traversals"
 $PY extract.py --out "$OUT" --sequences $DEV --batch "$BATCH"
@@ -117,4 +110,4 @@ nvidia-smi --query-gpu=name,driver_version --format=csv,noheader > "$HERE/result
 cp "$OUT/reproduction_dev.json" "$HERE/results/"
 cp "$OUT/descriptors/identities.json" "$HERE/results/" 2>/dev/null || true
 cat "$HERE/results/summary.md"
-step "Done. Commit and push experiments/anyloc_published/results/"
+step "Done. Results in experiments/anyloc_published/results/"

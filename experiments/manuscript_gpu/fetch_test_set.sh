@@ -43,4 +43,4 @@ step "4. Descriptors: DINOv3 (gated: hf auth login), DINOv2, AnyLoc ViT-G"
 (cd "$REPO/experiments/anyloc_published" && $PY extract.py --out "$ANYLOC_OUT" --sequences $SEQUENCES \
   --encoders dinov3_s dinov2_s anyloc_gem_g anyloc_vlad_g --batch "$BATCH")
 
-step "Done. Nothing has been evaluated. Commit and push experiments/manuscript_gpu/results/test_inventory.json"
+step "Done. Nothing has been evaluated. Inventory in experiments/manuscript_gpu/results/test_inventory.json"

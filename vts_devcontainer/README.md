@@ -71,8 +71,8 @@ encoder/
 Open `vts_devcontainer/` in the development container, then run:
 
 ```bash
-cd /workspaces/topo_sigma/vts_devcontainer/vts_ws
-colcon build --symlink-install --base-paths src   # output/ holds historical package copies
+cd /workspaces/s2pro2/vts_devcontainer/vts_ws
+colcon build --symlink-install --base-paths src
 source install/setup.bash
 ```
 
@@ -134,7 +134,7 @@ explicit confirmation (`{"query_id": ..., "confirm": <place>}` on
 ## Tests
 
 ```bash
-cd /workspaces/topo_sigma/vts_devcontainer/vts_ws
+cd /workspaces/s2pro2/vts_devcontainer/vts_ws
 python3 -m pytest -q src
 cd .. && uvx ruff check vts_ws/src
 ```

@@ -141,9 +141,7 @@ def graph_metrics(
         distances: np.ndarray = np.linalg.norm(deltas, axis=2)
         nearest: np.ndarray = distances.min(axis=1)
         coverage: float = float(np.mean(nearest <= tolerance))
-        # Fixed radii: comparable ACROSS runs. The adaptive-tolerance
-        # coverage is NOT (denser graphs shrink the tolerance, deflating
-        # the number even when the map improved).
+        # Fixed radii are comparable across runs; the adaptive tolerance shrinks with denser graphs.
         coverage_1m: float = float(np.mean(nearest <= 1.0))
         coverage_2m: float = float(np.mean(nearest <= 2.0))
     else:
@@ -169,8 +167,7 @@ def graph_metrics(
             )
             placement = float(np.sqrt(np.mean(residuals**2)))
     elif positions.size and ground_truth_xy.size:
-        # No node GT: fall back to nearest-trajectory distance — only
-        # meaningful if the graph poses live in the GT frame.
+        # Without node ground truth, graph poses are assumed to be in the ground-truth frame.
         placement = float(np.sqrt(np.mean(distances.min(axis=0) ** 2)))
 
     # Edge and loop-closure accounting. A closure opportunity exists when a
@@ -615,7 +612,7 @@ def rejection_curve(correct_top1: list[bool], margins: list[float]) -> list[dict
 
     For each candidate top-2 posterior-margin threshold, report the fraction of
     queries answered (coverage) and the top-1 accuracy on those (precision). The
-    operating curve of the margin-based rejection rule — the figure to plot.
+    This is the operating curve of the margin-based rejection rule.
 
     Args:
         correct_top1: per query, whether the top-1 label was correct.

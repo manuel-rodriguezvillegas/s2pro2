@@ -4,13 +4,13 @@ Variants (``V`` below). ``seg`` feeds the lambda_2 node detector; ``assoc`` is
 stored in the nodes and used for loop-closure evidence.
 
 - full replacement (as in the manuscript AnyLoc table): seg = assoc = encoder.
-- paired (new): seg = DINOv2-S (TopoSIGMA's own boundaries), assoc = encoder.
+- paired (new): seg = DINOv2-S (the manuscript's own boundaries), assoc = encoder.
   Every method then faces the same nodes and revisit opportunities, up to the
   representative frame chosen inside each segment.
 
 Reproduction checks on the manuscript sequences (must pass before anything else is read), with
 the manuscript's loop-closure exclusion of the two most recent nodes and Mac descriptors:
-- ``manuscript`` (vMF) == submission TopoSIGMA, all radii.
+- ``manuscript`` (vMF) == submission mapper, all radii.
 - ``manuscript_cosine`` (cosine) == submission cosine ablation.
 
 Run with BLAS limited to one thread per process (set by run_all.sh).

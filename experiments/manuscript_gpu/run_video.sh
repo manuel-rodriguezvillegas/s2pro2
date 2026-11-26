@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
-# Videos of the mapper on development traversals, on the university GPU (CPU only; a few
-# minutes each). It needs the replays of run_all.sh in $OUT and stops if a replay does not reproduce them.
+# Videos of the mapper on development traversals (CPU only; a few minutes each). It needs the replays of run_all.sh in $OUT and stops if a replay does not reproduce them.
 #
 #   nohup bash experiments/manuscript_gpu/run_video.sh > manuscript_video.log 2>&1 &
 #
 # Writes $OUT/video/<profile>/<traversal>.* for the profiles readme (MP4 and animated WebP), journal
-# (1080p MP4 and poster) and web (short MP4 and poster); nothing is committed.
+# (1080p MP4 and poster) and web (short MP4 and poster).
 # Environment: DATA_ROOT (<repo>/encoder), ANYLOC_OUT, OUT, PROFILES (all three), SEQUENCES (Freiburg A
 # and CID-SIMS apartment 3, the COLD and CID-SIMS maps with most loop closures to show).
 set -euo pipefail

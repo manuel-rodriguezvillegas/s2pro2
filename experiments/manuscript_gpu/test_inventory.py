@@ -10,6 +10,8 @@ import sys
 
 from stream import RESULTS, TEST, TEST_INVENTORY_FILE, frames
 
+from common import DATA_ROOT  # noqa: E402, I001
+
 
 def main() -> None:
     inventory = {}
@@ -20,7 +22,7 @@ def main() -> None:
         try:
             inventory[seq.name] = {"route": seq.route, "frames": sum(1 for _ in frames(seq))}
         except (ValueError, OSError) as error:
-            inventory[seq.name] = {"route": seq.route, "error": str(error)}
+            inventory[seq.name] = {"route": seq.route, "error": str(error).replace(f"{DATA_ROOT}/", "")}
     RESULTS.mkdir(exist_ok=True)
     TEST_INVENTORY_FILE.write_text(json.dumps(inventory, indent=1))
     for name, entry in inventory.items():

@@ -28,9 +28,6 @@ from vts_core.odometry import RelativeUncertainty
 from vts_core.places import Place
 
 
-# --------------------------------------------------------------------------- #
-# Appearance
-# --------------------------------------------------------------------------- #
 def similarity_matrix(queries: list[Place], references: list[Place], kind: str = "mean_cosine") -> np.ndarray:
     """Cosine of mean directions, or the symmetric multi-view score, for all pairs."""
     if kind == "mean_cosine":
@@ -101,9 +98,6 @@ def distance_sequence(scores: np.ndarray, query_distance: np.ndarray, reference_
     return out
 
 
-# --------------------------------------------------------------------------- #
-# SE(2) anchoring
-# --------------------------------------------------------------------------- #
 def fit_se2(source: np.ndarray, target: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     """Least-squares rotation and translation with ``target ≈ source R^T + t``."""
     source, target = np.asarray(source, dtype=np.float64), np.asarray(target, dtype=np.float64)
@@ -138,9 +132,9 @@ class AnchorConfig:
     detection: float = 0.6  # P(a consistent candidate | hypothesis true): overlap x retrieval
     history: int = 20  # recent candidate associations kept for proposing pairs
     max_hypotheses: int = 50
-    min_support: int = 5  # distinct query places supporting an accepted anchor (dev sweep 2026-10-02)
+    min_support: int = 5  # distinct query places supporting an accepted anchor
     min_evidence: float = 6.0  # accumulated log likelihood ratio of an accepted anchor
-    margin: float = 6.0  # log evidence over the best incompatible hypothesis (dev sweep 2026-10-02)
+    margin: float = 6.0  # log evidence over the best incompatible hypothesis
 
 
 @dataclass
@@ -248,9 +242,6 @@ class AnchorTracker:
         return best if best.evidence - max(rivals, default=0.0) >= config.margin else None
 
 
-# --------------------------------------------------------------------------- #
-# Online association of a session B with a stored map A
-# --------------------------------------------------------------------------- #
 @dataclass(frozen=True)
 class AppearanceModel:
     """Score distributions of same-place and different-place pairs (robust Gaussians)."""
@@ -267,7 +258,7 @@ class AppearanceModel:
 @dataclass(frozen=True)
 class CrossConfig:
     prior_revisit: float = 0.5
-    eps: float = 0.2  # geometric outlier mass after anchoring (dev sweep 2026-10-02; 0.05 hurt Freiburg A)
+    eps: float = 0.2  # geometric outlier mass after anchoring
     top_k: int = 3  # appearance candidates offered to the anchor tracker
     use_geometry: bool = True  # geometry after anchoring
     support_window: int = 10  # most recent supports used to refit the local transform

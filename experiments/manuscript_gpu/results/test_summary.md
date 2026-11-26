@@ -1,18 +1,18 @@
 # Test results
 
-Loop-closure rule of docs/TEST_PROTOCOL_PREDECESSOR_EXCLUSION_2026-11-21.md.
+Loop closure excludes only the predecessor of each node.
 
 ## Decisions of the protocols
 
 Routes resampled: 16. Traversals: 62.
 
-### First evaluation (docs/TEST_SET_PROTOCOL_DRAFT_2026-11-19.md)
+### First evaluation
 
 - primary, F1 topo − previous_system (bound +0.00): +0.282 [+0.217; +0.374] → CONFIRMED
 - non-inferiority VLAD, F1 topo − anyloc_vlad_g (bound -0.10): -0.009 [-0.062; +0.028] → CONFIRMED
 - non-inferiority GeM, F1 topo − anyloc_gem_g (bound -0.10): +0.037 [-0.014; +0.073] → CONFIRMED
 
-### Second evaluation (docs/TEST_PROTOCOL_DEBIASED_2026-11-20.md)
+### Second evaluation
 
 - H1, F1 topo_debiased − topo (bound +0.00): +0.071 [+0.043; +0.093] → CONFIRMED
 - H2, F1 topo_debiased − previous_system (bound +0.00): +0.353 [+0.296; +0.433] → CONFIRMED

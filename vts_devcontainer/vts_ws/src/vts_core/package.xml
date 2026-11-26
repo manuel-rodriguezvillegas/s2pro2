@@ -3,8 +3,8 @@
 <package format="3">
   <name>vts_core</name>
   <version>1.0.0</version>
-  <description>TopoSIGMA engine: sessions, segmentation, association, multi-session building blocks.</description>
-  <maintainer email="manuelrodriguez@alu.comillas.edu">Manuel Rodriguez Villegas</maintainer>
+  <description>S2PRO2 multi-session engine: sessions, segmentation, association, multi-session building blocks.</description>
+  <maintainer email="manuel.rodriguezvillegas09@gmail.com">Manuel Rodriguez Villegas</maintainer>
   <license>MIT</license>
   <exec_depend>python3-numpy</exec_depend>
   <exec_depend>python3-yaml</exec_depend>

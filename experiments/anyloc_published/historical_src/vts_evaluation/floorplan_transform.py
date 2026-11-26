@@ -12,8 +12,7 @@ Three transform types, selected by the ``type`` field of a
   rotation/shear/anisotropic scale that the axis-aligned linear map cannot).
 - ``tps``    : a thin-plate spline fit from >= 4 correspondences. TPS passes
   through every control point exactly, is globally smooth and minimises
-  bending energy — the principled replacement for the hand-fitted high-degree
-  polynomial (which oscillates between and outside its control points).
+  bending energy.
 
 All transforms expose the same call signature ``f(x, y) -> (col, row)`` on
 NumPy arrays, so the renderer is agnostic to which one a floorplan uses.
@@ -28,9 +27,6 @@ import numpy as np
 Transform = Callable[[np.ndarray, np.ndarray], tuple[np.ndarray, np.ndarray]]
 
 
-# ---------------------------------------------------------------------------#
-# Thin-plate spline
-# ---------------------------------------------------------------------------#
 def _tps_kernel(squared_distance: np.ndarray) -> np.ndarray:
     """Radial basis U(r) = r^2 log r, written in terms of r^2 (= 0.5 r^2 log r^2)."""
     out: np.ndarray = np.zeros_like(squared_distance)
@@ -87,9 +83,6 @@ def apply_tps(
     return out[:, 0], out[:, 1]
 
 
-# ---------------------------------------------------------------------------#
-# Affine
-# ---------------------------------------------------------------------------#
 def fit_affine(src: np.ndarray, dst: np.ndarray) -> np.ndarray:
     """Least-squares 6-DoF affine [a b c; d e f] mapping world -> pixel."""
     src = np.asarray(src, dtype=np.float64)
@@ -101,18 +94,13 @@ def fit_affine(src: np.ndarray, dst: np.ndarray) -> np.ndarray:
     return solution.T  # (2,3): rows = [col; row]
 
 
-# ---------------------------------------------------------------------------#
-# Dispatch
-# ---------------------------------------------------------------------------#
 def build_transform(calib: dict) -> Transform:
     """Build a world->pixel transform callable from a calibration dict."""
     kind: str = str(calib.get("type", "linear"))
 
     if kind == "linear":
-        # Per-axis affine. Each pixel axis may depend on either world axis, so a
-        # transposed/rotated floorplan (x->cols, y->rows) is expressible via the
-        # cross terms. Missing coefficients default to 0, keeping older sidecars
-        # (which only set col_per_y / row_per_x) working unchanged.
+        # Each pixel axis may depend on either world axis, so a transposed or rotated
+        # floorplan (x->cols, y->rows) is expressed by the cross terms, which default to 0.
         c0 = float(calib["col_origin"])
         r0 = float(calib["row_origin"])
         cx = float(calib.get("col_per_x", 0.0))

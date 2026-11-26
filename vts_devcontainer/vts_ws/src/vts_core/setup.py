@@ -15,8 +15,8 @@ setup(
     install_requires=["setuptools"],
     zip_safe=True,
     maintainer="Manuel Rodriguez Villegas",
-    maintainer_email="manuelrodriguez@alu.comillas.edu",
-    description="TopoSIGMA engine: sessions, segmentation, association, multi-session building blocks.",
+    maintainer_email="manuel.rodriguezvillegas09@gmail.com",
+    description="S2PRO2 multi-session engine: sessions, segmentation, association, multi-session building blocks.",
     license="MIT",
     python_requires=">=3.12,<3.13",
     entry_points={

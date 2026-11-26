@@ -1,4 +1,4 @@
-"""Stage-wise development study of cross-session association (plan B, step 4).
+"""Stage-wise development study of cross-session association.
 
 Every stage is measured against the appearance-only baseline (mean-direction
 cosine, top-1, margin as confidence) on all ordered development pairs:

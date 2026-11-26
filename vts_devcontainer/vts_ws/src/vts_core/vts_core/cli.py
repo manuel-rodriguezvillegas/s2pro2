@@ -55,9 +55,6 @@ def _pool(jobs: int, function, items: list):
         return list(pool.map(function, items))
 
 
-# --------------------------------------------------------------------------- #
-# frames
-# --------------------------------------------------------------------------- #
 def frames_list(config: dict, args) -> None:
     stored = set(stored_sessions(config, role=None))
     for name, recording in catalogue(config).items():
@@ -111,9 +108,6 @@ def frames_import(config: dict, args) -> None:
             print(f"{meta.stem}: skipped ({error})", flush=True)
 
 
-# --------------------------------------------------------------------------- #
-# map
-# --------------------------------------------------------------------------- #
 def _map_one(task: tuple[dict, str, str, bool]) -> dict:
     config, name, encoder, allow_test = task
     session = open_session(config, name, allow_test)
@@ -142,9 +136,6 @@ def map_command(config: dict, args) -> None:
         print(f"{row['session']}: {row['places']} places, {row['accepted']} accepted revisits", flush=True)
 
 
-# --------------------------------------------------------------------------- #
-# Cross-session pairs
-# --------------------------------------------------------------------------- #
 def development_pairs(config: dict) -> list[tuple[str, str]]:
     """Every ordered (map, query) pair of stored development sessions sharing an environment."""
     by_env = defaultdict(list)
@@ -214,9 +205,6 @@ def associate_command(config: dict, args) -> None:
     print(f"{len(results)} pairs -> {out}")
 
 
-# --------------------------------------------------------------------------- #
-# evaluate
-# --------------------------------------------------------------------------- #
 def evaluate_loops(config: dict, args) -> dict:
     """In-session loop closure metrics of stored map outputs, split by revisit type."""
     report = {}
@@ -299,7 +287,7 @@ def evaluate_cross(config: dict, args) -> dict:
 
 
 def evaluate_stages(config: dict, args) -> dict:
-    """Plan B step 4: E0 baseline, E1 calibrated appearance, E3 with anchored geometry."""
+    """E0 baseline, E1 calibrated appearance, E3 with anchored geometry."""
     from vts_core import stages
     from vts_core.multisession import CrossConfig
 
@@ -366,7 +354,6 @@ def evaluate_command(config: dict, args) -> None:
     print(f"-> {out}")
 
 
-# --------------------------------------------------------------------------- #
 def main(argv: list[str] | None = None) -> None:
     common = argparse.ArgumentParser(add_help=False)
     common.add_argument("--config", type=Path, default=None, help="YAML deep-merged over the defaults")

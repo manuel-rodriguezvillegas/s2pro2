@@ -225,9 +225,6 @@ class GateAssociator:
         return robust_outlier(scores[background], background.index(selected), self.visual_k)
 
 
-# --------------------------------------------------------------------------- #
-# Posterior association
-# --------------------------------------------------------------------------- #
 def robust_gaussian(values: list[float] | np.ndarray) -> tuple[float, float]:
     array = np.asarray(values, dtype=np.float64)
     median = float(np.median(array))

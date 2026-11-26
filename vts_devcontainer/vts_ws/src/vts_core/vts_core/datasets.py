@@ -63,9 +63,6 @@ def dataset_root(config: dict, dataset: str) -> Path:
     return data_root(config) / config["datasets"][dataset]["subdir"]
 
 
-# --------------------------------------------------------------------------- #
-# Catalogue
-# --------------------------------------------------------------------------- #
 def _role(name: str, config: dict) -> str:
     return "test" if any(fnmatch.fnmatch(name, p) for p in config["test_sessions"]) else "development"
 
@@ -106,9 +103,6 @@ def catalogue(config: dict) -> dict[str, Recording]:
     return found
 
 
-# --------------------------------------------------------------------------- #
-# COLD
-# --------------------------------------------------------------------------- #
 def canonical_cold_label(raw: str) -> str:
     raw = raw.strip()
     for name in COLD_CLASSES:
@@ -171,9 +165,6 @@ def read_cold(root: Path, recording: Recording, settings: dict) -> RawFrames:
     return RawFrames(timestamps, np.asarray(gts, dtype=np.float64), labels, paths, odom_t, odom_poses)
 
 
-# --------------------------------------------------------------------------- #
-# CID-SIMS
-# --------------------------------------------------------------------------- #
 def quaternion_yaw(x, y, z, w):
     """Heading in the world XY plane of the body x axis (ROS base convention)."""
     return np.arctan2(2.0 * (w * z + x * y), 1.0 - 2.0 * (y * y + z * z))

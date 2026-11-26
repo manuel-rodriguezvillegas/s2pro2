@@ -2,7 +2,7 @@
 
 Encoders (all frozen, no fitting on these data):
 
-- ``dinov2_s``        DINOv2 ViT-S/14 CLS, 224x224 (the TopoSIGMA descriptor;
+- ``dinov2_s``        DINOv2 ViT-S/14 CLS, 224x224 (the manuscript descriptor;
                       historical extractor code).
 - ``anyloc_gem_s224`` AnyLoc-GeM adaptation of the manuscript: ViT-S/14 block 11
                       value facet, GeM p=3, 224x224 (historical extractor code).

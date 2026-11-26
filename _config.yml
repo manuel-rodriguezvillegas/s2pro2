@@ -1,9 +1,8 @@
 # GitHub Pages configuration (Deploy from a branch: main, / root).
 # Jekyll renders README.md as the site index via jekyll-readme-index.
-title: TopoSIGMA
+title: S2PRO2
 description: >-
-  Topological Spectral Information-Geometric Mapping Architecture — online,
-  training-free visual topological mapping for ROS 2.
+  Online visual topological mapping with spectral segmentation and probability of proximity.
 theme: jekyll-theme-primer
 
 # Only the README and its images belong on the site; keep source code,

@@ -1,6 +1,6 @@
 {
  "source": "vts_devcontainer/vts_ws/output/submission/loop_tolerance_sweep.json",
- "note": "Submission loop metrics (TopoSIGMA = DINOv2-S + vMF; *_anyloc_gem_vits = manuscript AnyLoc adaptation; *_cosine = multi-view cosine).",
+ "note": "Submission loop metrics (submission mapper = DINOv2-S + vMF; *_anyloc_gem_vits = manuscript AnyLoc adaptation; *_cosine = multi-view cosine).",
  "cases": {
   "freiburg_a": [
    {

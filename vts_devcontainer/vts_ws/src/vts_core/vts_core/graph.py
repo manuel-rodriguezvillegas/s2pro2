@@ -56,7 +56,6 @@ class TopoGraph:
     def neighbours(self, node: tuple[str, int]) -> list[tuple[str, int]]:
         return [b if a == node else a for a, b in self.edges if node in (a, b)]
 
-    # ------------------------------------------------------------------ #
     def save(self, path: str | Path) -> None:
         arrays: dict[str, np.ndarray] = {}
         for k, name in enumerate(self.sessions):

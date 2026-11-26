@@ -84,9 +84,6 @@ def prf(tp: int, fp: int, fn: int) -> dict:
             "f1": 2 * tp / (2 * tp + fp + fn) if 2 * tp + fp + fn else 0.0}
 
 
-# --------------------------------------------------------------------------- #
-# Retrieval-style evaluation of cross-session association
-# --------------------------------------------------------------------------- #
 def top1_statistic(scores: np.ndarray, kind: str = "margin") -> tuple[np.ndarray, np.ndarray]:
     """Top-1 reference per query and its confidence (raw, margin or mad_z)."""
     top = scores.argmax(axis=1)

@@ -59,7 +59,6 @@ direction, where a forward camera cannot confirm the place. Every number comes f
 │   ├── anyloc_published/
 │   │   ├── historical_src/      The mapper evaluated in the paper
 │   │   └── ...                  Dataset downloads, descriptor extraction, AnyLoc baselines
-│   └── ...                      Earlier studies, kept for traceability
 ├── assets/readme/               Figures and video of this README
 ├── vts_devcontainer/            Ongoing multi-session work and ROS 2 packages (see below)
 └── encoder/                     Datasets, downloaded by the runners (ignored by Git)

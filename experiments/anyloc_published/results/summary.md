@@ -1,4 +1,4 @@
-# AnyLoc published baseline and held-out evaluation — results
+# AnyLoc published baseline and held-out evaluation
 
 Reproduction of the manuscript on the 7 development traversals: **PASS**
 

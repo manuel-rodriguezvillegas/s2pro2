@@ -1,4 +1,4 @@
-# TopoSIGMA — workspace packages
+# S2PRO2 workspace packages
 
 ROS 2 Jazzy, Ubuntu 24.04, CPython 3.12. Third-party Python dependencies are
 locked by uv in `../../pyproject.toml` and `../../uv.lock`.

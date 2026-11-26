@@ -4,7 +4,7 @@
   <name>vts_language</name>
   <version>1.0.0</version>
   <description>Natural-language place retrieval node.</description>
-  <maintainer email="manuelrodriguez@alu.comillas.edu">Manuel Rodriguez Villegas</maintainer>
+  <maintainer email="manuel.rodriguezvillegas09@gmail.com">Manuel Rodriguez Villegas</maintainer>
   <license>MIT</license>
   <depend>rclpy</depend>
   <depend>std_msgs</depend>

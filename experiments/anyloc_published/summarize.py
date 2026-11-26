@@ -136,7 +136,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
-    md = ["# AnyLoc published baseline and held-out evaluation — results", ""]
+    md = ["# AnyLoc published baseline and held-out evaluation", ""]
     summary = {}
     repro = args.out / "reproduction_dev.json"
     if repro.exists():

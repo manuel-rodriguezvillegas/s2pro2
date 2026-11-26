@@ -7,8 +7,8 @@
             "WORKSPACE": "${containerWorkspaceFolder}"
         }
     },
-    "workspaceMount": "source=${localWorkspaceFolder}/..,target=/workspaces/topo_sigma,type=bind",
-    "workspaceFolder": "/workspaces/topo_sigma/vts_devcontainer",
+    "workspaceMount": "source=${localWorkspaceFolder}/..,target=/workspaces/s2pro2,type=bind",
+    "workspaceFolder": "/workspaces/s2pro2/vts_devcontainer",
     "remoteUser": "ros",
     "runArgs": [
         "--network=host",
@@ -34,9 +34,6 @@
                 "ms-azuretools.vscode-docker",
                 "ms-vscode.cpptools",
                 "ajshort.msg",
-                "GitHub.copilot",
-                "gruntfuggly.todo-tree",
-                "mutantdino.resourcemonitor",
                 "njpwerner.autodocstring",
                 "smilerobotics.urdf",
                 "twxs.cmake",

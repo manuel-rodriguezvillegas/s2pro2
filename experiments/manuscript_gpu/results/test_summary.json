@@ -1,7 +1,7 @@
 {
  "decisions": {
   "routes": 16,
-  "First evaluation (docs/TEST_SET_PROTOCOL_DRAFT_2026-11-19.md)": {
+  "First evaluation": {
    "primary": {
     "point": 0.2818507657217335,
     "ci95": [
@@ -30,7 +30,7 @@
     "confirmed": true
    }
   },
-  "Second evaluation (docs/TEST_PROTOCOL_DEBIASED_2026-11-20.md)": {
+  "Second evaluation": {
    "H1": {
     "point": 0.07073981304127164,
     "ci95": [

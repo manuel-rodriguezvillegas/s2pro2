@@ -69,7 +69,6 @@ class CommandsNode(Node):
                 "Topic mode: publish a query on /language/command (std_msgs/String)."
             )
 
-    # ------------------------------------------------------------------ #
     def _on_command(self, msg: String) -> None:
         query: str = msg.data.strip()
         if not query:

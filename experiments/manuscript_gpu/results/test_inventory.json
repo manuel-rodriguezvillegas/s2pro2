@@ -93,11 +93,11 @@
  },
  "test_ljubljana_a_seq1_cloudy3": {
   "route": "cold-ljubljana_part_a_seq1",
-  "error": "[Errno 2] No such file or directory: '/home/ia/202114339/topo_sigma/encoder/seq_data/cold-ljubljana_part_a_seq1_cloudy3/odom_scans/odom.tdf'"
+  "error": "[Errno 2] No such file or directory: 'seq_data/cold-ljubljana_part_a_seq1_cloudy3/odom_scans/odom.tdf'"
  },
  "test_ljubljana_a_seq1_night1": {
   "route": "cold-ljubljana_part_a_seq1",
-  "error": "/home/ia/202114339/topo_sigma/encoder/seq_data/cold-ljubljana_part_a_seq1_night1/odom_scans/odom.tdf: odometry timestamps must be strictly increasing"
+  "error": "seq_data/cold-ljubljana_part_a_seq1_night1/odom_scans/odom.tdf: odometry timestamps must be strictly increasing"
  },
  "test_ljubljana_a_seq1_night2": {
   "route": "cold-ljubljana_part_a_seq1",
@@ -129,7 +129,7 @@
  },
  "test_ljubljana_a_seq2_night2": {
   "route": "cold-ljubljana_part_a_seq2",
-  "error": "/home/ia/202114339/topo_sigma/encoder/seq_data/cold-ljubljana_part_a_seq2_night2/odom_scans/odom.tdf: odometry timestamps must be strictly increasing"
+  "error": "seq_data/cold-ljubljana_part_a_seq2_night2/odom_scans/odom.tdf: odometry timestamps must be strictly increasing"
  },
  "test_ljubljana_a_seq2_night3": {
   "route": "cold-ljubljana_part_a_seq2",
@@ -137,7 +137,7 @@
  },
  "test_ljubljana_a_seq2_sunny1": {
   "route": "cold-ljubljana_part_a_seq2",
-  "error": "/home/ia/202114339/topo_sigma/encoder/seq_data/cold-ljubljana_part_a_seq2_sunny1/odom_scans/odom.tdf: odometry timestamps must be strictly increasing"
+  "error": "seq_data/cold-ljubljana_part_a_seq2_sunny1/odom_scans/odom.tdf: odometry timestamps must be strictly increasing"
  },
  "test_ljubljana_a_seq2_sunny2": {
   "route": "cold-ljubljana_part_a_seq2",

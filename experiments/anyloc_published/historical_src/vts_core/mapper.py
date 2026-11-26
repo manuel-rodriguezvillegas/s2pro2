@@ -52,25 +52,14 @@ from vts_core.topo_graph import (
 
 _PLACE_LOCALIZATION_SIGMA: float = 0.5
 
-# Visual revisit gate. A loop closure is accepted only if the candidate's vMF
-# overlap evidence is a robust *outlier* among candidates that remain
-# plausible after the independent context/geometric checks: at least the
-# median plus k robust standard deviations
-# (k * 1.4826 * MAD), with k the default below (tunable per run via the
-# ``visual_outlier_k`` constructor argument). This is the same MAD-relative
-# criterion used by the valley detector, applied to visual
-# similarity. It is what stops the "pollution snowball": a place that is
-# similar to *many* nodes (e.g. a generic corridor) produces no clear outlier
-# and is rejected. LOWER k -> easier loop closure, RAISE it -> stricter.
+# Robust standard deviations (1.4826 * MAD) above the median of the plausible candidates
+# that the visual evidence of a loop closure must reach.
 _VISUAL_OUTLIER_K: float = 2.0
-# Below this many nodes there is not enough evidence to judge an outlier;
-# stay conservative and do not close loops yet.
+# Loop closure starts once the map holds this many nodes.
 _MIN_NODES_FOR_REVISIT: int = 5
 
-# Revisit gate ablation modes. "both" is the full system (visual outlier test
-# AND geometric gate must agree); "visual" and "geometric" disable one gate
-# each; "threshold" replaces the whole dual gate with a naive absolute
-# cosine-similarity threshold — the baseline the dual gate is argued against.
+# "both": visual outlier test and geometric gate must agree; "visual" and "geometric" keep
+# one of them; "threshold" replaces both with an absolute cosine-similarity threshold.
 GATE_MODES: tuple[str, ...] = ("both", "visual", "geometric", "threshold")
 # "gate": chi-square gate and visual outlier test. "disk": accept the most probable
 # earlier place when the probability of being within ``place_radius`` of it exceeds
@@ -200,9 +189,6 @@ class TopologicalMapper:
         self._revisit_search_time_s: float = 0.0
         self._revisit_search_count: int = 0
 
-    # ------------------------------------------------------------------ #
-    # Public API
-    # ------------------------------------------------------------------ #
     def process_frame(
         self,
         image_bgr: np.ndarray,
@@ -339,9 +325,6 @@ class TopologicalMapper:
             "max_detection_latency_samples": (float(np.max(latencies)) if latencies else 0.0),
         }
 
-    # ------------------------------------------------------------------ #
-    # Edge bookkeeping
-    # ------------------------------------------------------------------ #
     def _segment_medoid(
         self, segment: Sequence[FrameRecord], mean_descriptor: np.ndarray
     ) -> FrameRecord:
@@ -376,9 +359,7 @@ class TopologicalMapper:
             visual_sample_count=directional_model.sample_count,
             pose_covariance=representative.covariance.copy(),
             extent_covariance=extent_covariance,
-            # Evaluation-only: pin the node's GT to the SAME frame whose pose
-            # became the node pose, so placement error reflects odometric
-            # distortion, not the medoid/segment-boundary frame mismatch.
+            # Ground truth of the frame whose pose became the node pose (evaluation only).
             gt_pose=representative.gt_pose,
             room_label=representative.room_label,
         )
@@ -427,8 +408,8 @@ class TopologicalMapper:
     def _visual_outlier(self, similarities: np.ndarray, match_index: int) -> bool:
         """True if the match is a robust visual outlier in its evidence pool.
 
-        Rejects matches that are not clearly distinctive — the core defence
-        against perceptual-aliasing welds and descriptor-pollution snowballs.
+        Rejects matches that are not clearly distinctive, which guards against
+        perceptual aliasing.
         The strictness is ``self._visual_outlier_k`` (configurable per run).
         """
         # Search-level warm-up already guarantees enough map evidence. After

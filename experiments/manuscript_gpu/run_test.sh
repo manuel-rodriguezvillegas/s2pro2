@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
-# Evaluation of the frozen methods on the readable test traversals, on the university GPU, with the
-# loop-closure rule of docs/TEST_PROTOCOL_PREDECESSOR_EXCLUSION_2026-11-21.md: the hypotheses of the
-# first protocol (topo) and the second (topo_debiased).
+# Evaluation of the frozen methods on the readable test traversals, with only the predecessor excluded
+# from loop closure: the hypotheses of the first protocol (topo) and the second (topo_debiased).
 #
 #   nohup bash experiments/manuscript_gpu/run_test.sh > manuscript_test.log 2>&1 &
 #
 # It stops before mapping anything if the method code or its calibration files differ from the
-# frozen ones. Re-running resumes after a crash: finished replays are skipped. When it ends,
-# commit and push experiments/manuscript_gpu/results/.
+# frozen ones. Re-running resumes after a crash: finished replays are skipped.
 # Environment: DATA_ROOT (<repo>/encoder), ANYLOC_OUT, OUT, JOBS (6).
 set -euo pipefail
 
@@ -56,4 +54,4 @@ step "4. Decisions and summary"
 git -C "$REPO" rev-parse HEAD > "$HERE/results/test_commit.txt"
 $PY test_report.py --out "$OUT" > /dev/null
 cat "$HERE/results/test_summary.md"
-step "Done. Commit and push experiments/manuscript_gpu/results/"
+step "Done. Results in experiments/manuscript_gpu/results/"

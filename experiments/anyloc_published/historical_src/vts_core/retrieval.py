@@ -31,7 +31,7 @@ _SIGLIP_TEXT_LENGTH: int = 64
 
 # Minimum top-2 posterior margin for an unambiguous answer. With softmax at
 # the model's logit scale, 0.1 means "the best node holds at least 10 percentage
-# points more probability mass than the runner-up" — a relative,
+# points more probability mass than the runner-up". It is a relative,
 # per-query heuristic, not a calibrated probability or similarity cutoff.
 _MIN_POSTERIOR_MARGIN: float = 0.1
 
@@ -201,7 +201,7 @@ class PlaceRetriever:
             image/text similarity, surfaced for debugging and inspection.
             The flag is only a relative distinctiveness heuristic, never evidence
             that the destination exists. It is False when the top-2 margin is
-            below the heuristic rejection bound — the caller should treat the answer
+            below the heuristic rejection bound; the caller should treat the answer
             as ambiguous (e.g. ask the user to disambiguate among top-k).
         """
         if top_k < 1:

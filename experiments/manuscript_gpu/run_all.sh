@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
-# Design runs of the manuscript (7 development and 12 validation traversals), on the university GPU.
+# Design runs of the manuscript (7 development and 12 validation traversals).
 # The test traversals are evaluated separately, once the design is frozen.
 #
 #   nohup bash experiments/manuscript_gpu/run_all.sh > manuscript_gpu.log 2>&1 &
 #   tail -f manuscript_gpu.log
 #
-# Re-running resumes: finished replays are skipped. When it ends, commit and push
-# experiments/manuscript_gpu/results/.
+# Re-running resumes: finished replays are skipped.
 # Environment: DATA_ROOT (<repo>/encoder), ANYLOC_OUT, OUT, JOBS (6).
 set -euo pipefail
 
@@ -63,4 +62,4 @@ nvidia-smi --query-gpu=name,driver_version --format=csv,noheader > "$HERE/result
 git -C "$REPO" rev-parse HEAD > "$HERE/results/commit.txt"
 $PY report.py --out "$OUT" > /dev/null
 cat "$HERE/results/summary.md"
-step "Done. Commit and push experiments/manuscript_gpu/results/"
+step "Done. Results in experiments/manuscript_gpu/results/"

@@ -4,7 +4,7 @@
   <name>vts_mapping</name>
   <version>1.0.0</version>
   <description>Topological graph building node.</description>
-  <maintainer email="manuelrodriguez@alu.comillas.edu">Manuel Rodriguez Villegas</maintainer>
+  <maintainer email="manuel.rodriguezvillegas09@gmail.com">Manuel Rodriguez Villegas</maintainer>
   <license>MIT</license>
   <depend>rclpy</depend>
   <depend>sensor_msgs</depend>

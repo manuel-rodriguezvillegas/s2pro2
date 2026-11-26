@@ -30,12 +30,12 @@ class Hypothesis:
 
 
 PROTOCOLS = {
-    "First evaluation (docs/TEST_SET_PROTOCOL_DRAFT_2026-11-19.md)": [
+    "First evaluation": [
         Hypothesis("primary", "topo", "previous_system", 0.0),
         Hypothesis("non-inferiority VLAD", "topo", "anyloc_vlad_g", -0.10, ("primary",)),
         Hypothesis("non-inferiority GeM", "topo", "anyloc_gem_g", -0.10, ("primary",)),
     ],
-    "Second evaluation (docs/TEST_PROTOCOL_DEBIASED_2026-11-20.md)": [
+    "Second evaluation": [
         Hypothesis("H1", "topo_debiased", "topo", 0.0),
         Hypothesis("H2", "topo_debiased", "previous_system", 0.0, ("H1",)),
         Hypothesis("H3", "topo_debiased", "anyloc_vlad_g", 0.0, ("H1", "H2")),
@@ -43,7 +43,6 @@ PROTOCOLS = {
     ],
 }
 RECORDED_PREVIOUS_SYSTEM_2M = (74, 30, 147)
-LOOP_RULE_PROTOCOL = "docs/TEST_PROTOCOL_PREDECESSOR_EXCLUSION_2026-11-21.md"
 DOMAIN_SUBSETS = {
     "COLD": lambda s: s.dataset == "cold",
     "CID-SIMS": lambda s: s.dataset == "cid",
@@ -101,7 +100,7 @@ def main() -> None:
     if missing:
         raise SystemExit(f"{len(missing)} test runs are missing, for example {missing[:3]}")
     check_reproduction(results, seqs)
-    lines, data = ["# Test results", "", f"Loop-closure rule of {LOOP_RULE_PROTOCOL}.", ""], {}
+    lines, data = ["# Test results", "", "Loop closure excludes only the predecessor of each node.", ""], {}
     for name, (section, payload) in {
         "decisions": decisions(results, seqs),
         "test": split_section(results, seqs, f"Test traversals ({len(seqs)})", list(TEST_VARIANTS), by_route,

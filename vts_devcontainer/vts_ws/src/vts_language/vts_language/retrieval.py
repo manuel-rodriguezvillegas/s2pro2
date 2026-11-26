@@ -33,7 +33,7 @@ _SIGLIP_TEXT_LENGTH: int = 64
 
 # Minimum top-2 posterior margin for an unambiguous answer. With softmax at
 # the model's logit scale, 0.1 means "the best node holds at least 10 percentage
-# points more probability mass than the runner-up" — a relative,
+# points more probability mass than the runner-up". It is a relative,
 # per-query heuristic, not a calibrated probability or similarity cutoff.
 _MIN_POSTERIOR_MARGIN: float = 0.1
 

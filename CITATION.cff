@@ -5,6 +5,7 @@ type: software
 authors:
   - family-names: "Rodríguez-Villegas"
     given-names: "Manuel"
+    orcid: "https://orcid.org/0009-0006-7902-8488"
   - family-names: "Boal"
     given-names: "Jaime"
   - family-names: "Tordesillas"
